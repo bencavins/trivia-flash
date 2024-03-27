@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
+from sqlalchemy_serializer import SerializerMixin
 
 
 metadata = MetaData(naming_convention={
@@ -13,7 +14,7 @@ metadata = MetaData(naming_convention={
 db = SQLAlchemy(metadata=metadata)
 
 
-class Card(db.Model):
+class Card(db.Model, SerializerMixin):
     __tablename__ = 'cards'
 
     id = db.Column(db.Integer, primary_key=True)
