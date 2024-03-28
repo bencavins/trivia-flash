@@ -13,7 +13,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 Migrate(app, db)
 
-
+# test
 @app.route('/')
 def root():
     return '<h1>Hello!</h1>'
