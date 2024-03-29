@@ -2,21 +2,28 @@ import './ImageCard.css'
 import { useState } from 'react'
 
 export default function ImageCard({ img_url, answer }) {
-  const [msg, setMsg] = useState("")
+  const [hasAnswered, setHasAnswered] = useState(false)
+  const [isCorrect, setIsCorrect] = useState()
 
   function handleSubmit(event) {
     event.preventDefault()
-    if (event.target['user-answer'].value.toLowerCase() == answer.toLowerCase()) {
-      setMsg('Correct!')
-    } else {
-      setMsg(`Incorrect! (answer: ${answer})`)
-    }
+    setHasAnswered(true)
+    setIsCorrect(event.target['user-answer'].value.toLowerCase() == answer.toLowerCase())
   }
+
+  const cardRespose = (
+    <div className="card-response">
+      {isCorrect ? 
+        <p style={{color: 'green'}}>Correct!</p> 
+      : <p style={{color: 'red'}}>Incorrect! The answer is {answer}</p>}
+      <a href="/">Next Question</a>
+    </div>
+  )
 
   return (
     <div>
       <img src={img_url} />
-      {msg ? <p>{msg}</p> : null}
+      {hasAnswered ? cardRespose : null}
       <form onSubmit={handleSubmit}>
         <label>Name the movie: </label>
         <input type="text" name="user-answer" />
