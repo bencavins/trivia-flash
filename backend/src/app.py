@@ -1,6 +1,7 @@
 import random
 
 from flask import Flask
+from flask_cors import CORS
 from flask_migrate import Migrate
 from dotenv import dotenv_values
 
@@ -14,7 +15,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 Migrate(app, db)
-
+CORS(app)
 
 @app.route('/')
 def root():
