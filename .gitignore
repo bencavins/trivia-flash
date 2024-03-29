@@ -294,3 +294,6 @@ dist
 
 # mac os
 .DS_Store
+
+# vite
+.vite
