@@ -1,21 +1,20 @@
 import random
+import json
 
 from flask import Flask
 from flask_cors import CORS
-from flask_migrate import Migrate
 from dotenv import dotenv_values
-
-from models import db, Card
-
+from pymongo import MongoClient
+from bson import json_util
 
 env_values = dotenv_values()
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = env_values.get('DATABASE_URI')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db.init_app(app)
-Migrate(app, db)
+client = MongoClient(env_values.get('MONGO_DB_URI'))
+db = client.trivia
+
 CORS(app)
+
 
 @app.route('/')
 def root():
@@ -23,19 +22,9 @@ def root():
 
 @app.route('/cards')
 def all_cards():
-    return [c.to_dict() for c in Card.query.all()], 200
-
-@app.route('/cards/<int:id>')
-def card_by_id(id):
-    card = Card.query.filter(Card.id == id).first()
-
-    if not card:
-        return {'error': 'card not found'}, 404
-    
-    return card.to_dict(), 200
+    return [json.loads(json_util.dumps(record)) for record in db.questions.find()], 200
 
 @app.route('/cards/random')
 def random_card():
-    cards = Card.query.all()
-    card = random.choice(cards)
-    return card.to_dict(), 200
+    record = db.questions.find_one()
+    return json.loads(json_util.dumps(record)), 200
