@@ -5,5 +5,5 @@
     - Path to the flask application script
 - FLASK_RUN_PORT
     - Port to run flask on
-- DATABASE_URI
+- MONGO_DB_URI
     - URI for connecting to the database

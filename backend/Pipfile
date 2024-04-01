@@ -5,12 +5,10 @@ name = "pypi"
 
 [packages]
 flask = "*"
-flask-migrate = "*"
-flask-sqlalchemy = "*"
 python-dotenv = "*"
-sqlalchemy-serializer = "*"
 flask-cors = "*"
 gunicorn = "*"
+pymongo = "*"
 
 [dev-packages]
 
