@@ -26,5 +26,5 @@ def all_cards():
 
 @app.route('/cards/random')
 def random_card():
-    record = db.questions.find_one()
-    return json.loads(json_util.dumps(record)), 200
+    record = random.choice(all_cards()[0])
+    return record, 200
